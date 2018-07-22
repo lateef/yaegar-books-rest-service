@@ -1,0 +1,17 @@
+project.ext {
+    ioCucumberVersion = '3.0.2'
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-mail')
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    annotationProcessor('org.projectlombok:lombok')
+    compileOnly('org.projectlombok:lombok')
+    runtime('org.springframework.boot:spring-boot-devtools')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.security:spring-security-test')
+
+    integrationTestCompile("io.cucumber:cucumber-java:$ioCucumberVersion")
+    integrationTestCompile("io.cucumber:cucumber-junit:$ioCucumberVersion")
+}
