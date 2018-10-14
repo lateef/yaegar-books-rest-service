@@ -1,17 +1,27 @@
 project.ext {
     ioCucumberVersion = '3.0.2'
+    ioRestAssuredVersion = '3.1.0'
 }
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-mail')
     compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.boot:spring-boot-starter-web')
-    annotationProcessor('org.projectlombok:lombok')
-    compileOnly('org.projectlombok:lombok')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-devtools')
+    compile('com.fasterxml.jackson.core:jackson-databind')
+    compile('io.jsonwebtoken:jjwt:0.9.1')
+
     runtime('org.springframework.boot:spring-boot-devtools')
+    runtime('org.mariadb.jdbc:mariadb-java-client')
+    runtime('com.h2database:h2')
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.security:spring-security-test')
+    testCompile('org.mockito:mockito-core')
 
+    integrationTestCompile("io.rest-assured:rest-assured:$ioRestAssuredVersion")
     integrationTestCompile("io.cucumber:cucumber-java:$ioCucumberVersion")
     integrationTestCompile("io.cucumber:cucumber-junit:$ioCucumberVersion")
+    integrationTestCompile("io.cucumber:cucumber-spring:$ioCucumberVersion")
 }
