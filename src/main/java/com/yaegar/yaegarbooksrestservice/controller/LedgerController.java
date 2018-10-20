@@ -23,7 +23,7 @@ public class LedgerController {
         this.ledgerService = ledgerService;
     }
 
-    @RequestMapping(value = "/add-general-ledger", method = RequestMethod.POST)
+    @RequestMapping(value = "/add-ledger", method = RequestMethod.POST)
     public ResponseEntity<Ledger> addLedger(@RequestBody final Ledger ledger, ModelMap model, HttpServletRequest httpServletRequest) {
         final User user = (User) model.get("user");
         HttpHeaders headers = null;

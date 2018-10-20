@@ -9,7 +9,7 @@ VALUES
 (2, 'dcbf0554-8d0a-4706-b98d-9a67359b2abb', 2000000, 'Liabilities', 'A liability is an obligation that arises in the course of doing business to be paid over a period of time', null, 0, false);
 INSERT IGNORE INTO Ledger_Template (ledger_templateid, uuid, code, name, description, parent_uuid, report_sort_order, show_on_dashboard)
 VALUES
-(3, '33ed413b-288b-4218-982c-7d3cd842f3ce', 3000000, 'Equity and reserves', "Shareholders' funds", null, 0, false);
+(3, '33ed413b-288b-4218-982c-7d3cd842f3ce', 3000000, 'Equity', "Shareholders' funds", null, 0, false);
 INSERT IGNORE INTO Ledger_Template (ledger_templateid, uuid, code, name, description, parent_uuid, report_sort_order, show_on_dashboard)
 VALUES
 (4, '4ec43749-b607-4951-9cc6-1e81d657c56c', 4000000, 'Income/Revenue', 'Income from normal business activity', null, 1, false);
@@ -33,7 +33,10 @@ VALUES
 (10, '8923294d-022c-4ad9-a89f-de9c03965a8f', 1220000, 'Bank', 'Bank', '52fafb19-0891-4cf6-9f0e-cb9682458f36', 33, false);
 INSERT IGNORE INTO Ledger_Template (ledger_templateid, uuid, code, name, description, parent_uuid, report_sort_order, show_on_dashboard)
 VALUES
-(11, 'd8f6da33-58e9-48a9-8c26-0bb9fef7c87f', 3000001, "Owner's Capital", "Owner's share capital", '33ed413b-288b-4218-982c-7d3cd842f3ce', 0, false);
+(11, 'd8f6da33-58e9-48a9-8c26-0bb9fef7c87f', 3000001, "Owner's Contribution", "Owner's share capital contribution", '33ed413b-288b-4218-982c-7d3cd842f3ce', 0, false);
+INSERT IGNORE INTO Ledger_Template (ledger_templateid, uuid, code, name, description, parent_uuid, report_sort_order, show_on_dashboard)
+VALUES
+(12, '802d1e67-ae4c-4fde-869f-55793404b1c7', 3000002, "Owner's Distribution", "Owner's share capital distribution", '33ed413b-288b-4218-982c-7d3cd842f3ce', 0, false);
 
 
 

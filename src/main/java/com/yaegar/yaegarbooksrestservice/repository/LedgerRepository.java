@@ -1,5 +1,6 @@
 package com.yaegar.yaegarbooksrestservice.repository;
 
+import com.yaegar.yaegarbooksrestservice.model.ChartOfAccounts;
 import com.yaegar.yaegarbooksrestservice.model.Ledger;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,4 +11,6 @@ public interface LedgerRepository extends JpaRepository<Ledger, Long> {
     Optional<Ledger> findByUuid(String uuid);
 
     List<Ledger> findByParentUuid(String parentUuid);
+
+    List<Ledger> findByChartOfAccounts(ChartOfAccounts chartOfAccounts);
 }
