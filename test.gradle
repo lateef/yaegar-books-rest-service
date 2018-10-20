@@ -52,4 +52,5 @@ tasks.withType(Test) {
 
 integrationTest {
     testLogging.showStandardStreams = true
+    systemProperties = System.properties
 }
