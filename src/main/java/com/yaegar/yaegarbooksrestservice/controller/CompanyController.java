@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.yaegar.yaegarbooksrestservice.util.ProfileClassification.BUSINESS;
 
@@ -60,17 +61,26 @@ public class CompanyController {
     public ResponseEntity<List<Company>> getCompanies(ModelMap model, HttpServletRequest httpServletRequest) {
         final User user = (User) model.get("user");
         HttpHeaders headers = null;
-        List<Company> companies = new ArrayList<>();
         if (user != null) {
             headers = AuthenticationUtils.getAuthenticatedUser(user);
-            companies = companyService.getCompaniesByEmployeesIn(Collections.singletonList(user));
+            List<Company> companies = companyService.getCompaniesByEmployeesIn(Collections.singletonList(user));
+            companies = companies
+                    .stream()
+                    .map(company -> {
+                        List<Ledger> ledgers = ledgerService
+                                .findByChartOfAccounts(company.getChartOfAccounts());
+                        company.getChartOfAccounts().setLedgers(ledgers);
+                        return company;
+                    })
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok().headers(headers).body(companies);
         }
-        return ResponseEntity.ok().headers(headers).body(companies);
+        return ResponseEntity.ok().headers(headers).body(new ArrayList<>());
     }
 
     @Transactional
     Company setupCompany(@RequestBody Company company, User user) {
-        final ChartOfAccounts chartOfAccounts = chartOfAccountsService.createChartOfAccounts(BUSINESS);
+        final ChartOfAccounts chartOfAccounts = chartOfAccountsService.createChartOfAccounts(BUSINESS, user);
         company.setChartOfAccounts(chartOfAccounts);
         Company company1 = companyService.addCompany(company);
         List<Ledger> ledgers = ledgerService.addAllToCompany(chartOfAccounts, user);

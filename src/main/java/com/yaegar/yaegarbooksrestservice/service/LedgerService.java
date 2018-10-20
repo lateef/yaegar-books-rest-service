@@ -38,7 +38,6 @@ public class LedgerService {
                     ledger.setName(ledgerTemplate.getName());
                     ledger.setDescription(ledgerTemplate.getDescription());
                     ledger.setChartOfAccounts(chartOfAccounts);
-                    ledger.setParentUuid(ledgerTemplate.getParentUuid());
                     ledger.setCode(ledgerTemplate.getCode());
                     ledger.setCreatedBy(createdBy);
                     ledger.setUpdatedBy(createdBy);
@@ -47,7 +46,35 @@ public class LedgerService {
                     return ledger;
                 })
                 .collect(Collectors.toList());
-        return ledgerRepository.saveAll(ledgers);
+        final List<Ledger> ledgers1 = ledgers
+                .stream()
+                .map(ledger -> {
+                    final LedgerTemplate matchingLedgerTemplate = ledgerTemplates
+                            .stream()
+                            .filter(ledgerTemplate -> ledgerTemplate.getName()
+                                    .equals(ledger.getName()))
+                            .findFirst()
+                            .orElseThrow(NullPointerException::new);
+
+                    if (matchingLedgerTemplate.getParentUuid() != null) {
+                        final LedgerTemplate parentLedgerTemplate = ledgerTemplates
+                                .stream()
+                                .filter(ledgerTemplate -> ledgerTemplate.getUuid()
+                                        .equals(matchingLedgerTemplate.getParentUuid()))
+                                .findFirst()
+                                .orElseThrow(NullPointerException::new);
+                        final Ledger parentLedger = ledgers
+                                .stream()
+                                .filter(ledger1 -> ledger1.getName()
+                                        .equals(parentLedgerTemplate.getName()))
+                                .findFirst()
+                                .orElseThrow(NullPointerException::new);
+                        ledger.setParentUuid(parentLedger.getUuid());
+                    }
+                    return ledger;
+                })
+                .collect(Collectors.toList());
+        return ledgerRepository.saveAll(ledgers1);
     }
 
     public Optional<Ledger> findByUuid(String uuid) {
@@ -56,6 +83,10 @@ public class LedgerService {
 
     public List<Ledger> findByParentUuid(String parentUuid) {
         return ledgerRepository.findByParentUuid(parentUuid);
+    }
+
+    public List<Ledger> findByChartOfAccounts(ChartOfAccounts chartOfAccounts) {
+        return ledgerRepository.findByChartOfAccounts(chartOfAccounts);
     }
 
     public Ledger addLedger(Ledger ledger) {
