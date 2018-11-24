@@ -26,6 +26,10 @@ repositories {
     mavenCentral()
 }
 
+bootJar {
+    archiveName = 'yaegar-books-rest-service.jar'
+}
+
 bootRun {
     //Usage: ./gradlew clean bootRun -Pargs=--server.port=6666,--app.db.host=127.0.0.1
     if (project.hasProperty('args')) {
