@@ -1,6 +1,6 @@
 package com.yaegar.yaegarbooksrestservice.model;
 
-import org.hibernate.validator.constraints.Length;
+import com.yaegar.yaegarbooksrestservice.audit.entity.AbstractEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -9,18 +9,13 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "Phone")
-public class Phone implements Serializable {
+public class Phone extends AbstractEntity implements Serializable {
     private static final long serialVersionUID = 8784430352935535495L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PhoneID")
     private Long phoneId;
-
-    @NotEmpty
-    @Length(min = 36, max = 36)
-    @Column(name = "Uuid", unique = true, nullable = false, length = 36)
-    private String uuid;
 
     @NotEmpty
     @Column(name = "Code", length = 3, nullable = false)
@@ -36,14 +31,6 @@ public class Phone implements Serializable {
 
     public void setPhoneId(Long phoneId) {
         this.phoneId = phoneId;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public String getCode() {
@@ -81,7 +68,6 @@ public class Phone implements Serializable {
     public String toString() {
         return "Phone{" +
                 "phoneId=" + phoneId +
-                ", uuid='" + uuid + '\'' +
                 ", code='" + code + '\'' +
                 ", number='" + number + '\'' +
                 '}';

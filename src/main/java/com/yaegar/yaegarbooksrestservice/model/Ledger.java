@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Table(name = "Ledger",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"ChartOfAccountsID", "Code"}),
-                @UniqueConstraint(columnNames = {"ChartOfAccountsID", "Name"})
+                @UniqueConstraint(columnNames = {"ChartOfAccountsID", "Name", "ParentUuid"})
         }
 )
 public class Ledger extends AbstractLedger implements Serializable {

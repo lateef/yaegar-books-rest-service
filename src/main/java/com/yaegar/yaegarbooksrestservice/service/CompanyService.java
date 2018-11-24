@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CompanyService {
@@ -21,6 +22,10 @@ public class CompanyService {
 
     public Company addCompany(Company company) {
         return companyRepository.save(company);
+    }
+
+    public Optional<Company> findByUuid(String uuid){
+        return companyRepository.findByUuid(uuid);
     }
 
     public List<Company> getCompaniesByEmployeesIn(List<User> employees) {

@@ -1,4 +1,4 @@
-package com.yaegar.yaegarbooksrestservice.util;
+package com.yaegar.yaegarbooksrestservice.model.enums;
 
 public enum ProfileClassification {
     PERSONAL("PERSONAL"), BUSINESS("BUSINESS");

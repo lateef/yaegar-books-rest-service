@@ -1,11 +1,9 @@
 package com.yaegar.yaegarbooksrestservice.model;
 
 import com.yaegar.yaegarbooksrestservice.audit.entity.AbstractEntity;
-import com.yaegar.yaegarbooksrestservice.util.ProfileClassification;
-import org.hibernate.validator.constraints.Length;
+import com.yaegar.yaegarbooksrestservice.model.enums.ProfileClassification;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,11 +16,6 @@ public class ChartOfAccounts extends AbstractEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ChartOfAccountsID")
     private Long chartOfAccountsId;
-
-    @NotEmpty
-    @Length(min = 36, max = 36)
-    @Column(name = "Uuid", unique = true, nullable = false, length = 36)
-    private String uuid;
 
     @Column(name = "ProfileClassification")
     @Enumerated(value = EnumType.STRING)
@@ -45,14 +38,6 @@ public class ChartOfAccounts extends AbstractEntity implements Serializable {
 
     public void setChartOfAccountsId(Long chartOfAccountsId) {
         this.chartOfAccountsId = chartOfAccountsId;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public ProfileClassification getProfileClassification() {

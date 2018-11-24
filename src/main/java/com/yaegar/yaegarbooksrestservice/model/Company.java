@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,11 +18,6 @@ public class Company extends Profile implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CompanyID")
     private Long companyId;
-
-    @NotEmpty
-    @Length(min = 36, max = 36)
-    @Column(name = "Uuid", unique = true, nullable = false, length = 36)
-    private String uuid;
 
     @JsonIgnore
     @ManyToMany(cascade = {
@@ -47,11 +41,11 @@ public class Company extends Profile implements Serializable {
     )
     private Set<User> employees = new HashSet<>();
 
-    @Length(max = 32)
-    @Column(name = "Name", nullable = false, length = 32)
+    @Length(max = 256)
+    @Column(name = "Name", nullable = false, length = 256)
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ChartOfAccountsID")
     private ChartOfAccounts chartOfAccounts;
 
@@ -61,14 +55,6 @@ public class Company extends Profile implements Serializable {
 
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public Set<User> getOwners() {

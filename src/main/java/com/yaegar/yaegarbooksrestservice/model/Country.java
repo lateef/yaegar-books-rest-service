@@ -4,7 +4,6 @@ import com.yaegar.yaegarbooksrestservice.audit.entity.AbstractEntity;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 @Entity
@@ -21,11 +20,6 @@ public class Country extends AbstractEntity implements Serializable {
     @Column(name = "Name", nullable = false, unique = true, length = 32)
     private String name;
 
-    @NotEmpty
-    @Length(min = 36, max = 36)
-    @Column(name = "Uuid", unique = true, nullable = false, length = 36)
-    private String uuid;
-
     public Long getCountryId() {
         return countryId;
     }
@@ -40,13 +34,5 @@ public class Country extends AbstractEntity implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 }

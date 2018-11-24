@@ -1,10 +1,8 @@
 package com.yaegar.yaegarbooksrestservice.model;
 
 import com.yaegar.yaegarbooksrestservice.audit.entity.AbstractEntity;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 @Entity
@@ -16,11 +14,6 @@ public class UserConfirmation extends AbstractEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UserConfirmationID")
     private Long userConfirmationId;
-
-    @NotEmpty
-    @Length(min = 36, max = 36)
-    @Column(name = "Uuid", unique = true, nullable = false, length = 36)
-    private String uuid;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "PhoneNumber", referencedColumnName = "PhoneNumber")
@@ -38,14 +31,6 @@ public class UserConfirmation extends AbstractEntity implements Serializable {
 
     public void setUserConfirmationId(Long userConfirmationId) {
         this.userConfirmationId = userConfirmationId;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public User getUser() {
