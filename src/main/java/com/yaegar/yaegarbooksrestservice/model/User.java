@@ -24,11 +24,6 @@ public class User extends AbstractEntity implements Serializable {
     @Column(name = "UserID")
     private Long userId;
 
-    @NotEmpty
-    @Length(min = 36, max = 36)
-    @Column(name = "Uuid", unique = true, nullable = false, length = 36)
-    private String uuid;
-
     @Length(max = 32)
     @Column(name = "FirstName", length = 32)
     private String firstName;
@@ -81,14 +76,6 @@ public class User extends AbstractEntity implements Serializable {
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public String getFirstName() {

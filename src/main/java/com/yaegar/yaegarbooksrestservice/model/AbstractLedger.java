@@ -1,19 +1,17 @@
 package com.yaegar.yaegarbooksrestservice.model;
 
 import com.yaegar.yaegarbooksrestservice.audit.entity.AbstractEntity;
+import com.yaegar.yaegarbooksrestservice.model.enums.LedgerType;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotEmpty;
 
 @MappedSuperclass
 public abstract class AbstractLedger extends AbstractEntity {
-    @NotEmpty
-    @Length(min = 36, max = 36)
-    @Column(name = "Uuid", unique = true, nullable = false, length = 36)
-    private String uuid;
-
     @Column(name = "Code", nullable = false)
     private int code;
 
@@ -25,6 +23,10 @@ public abstract class AbstractLedger extends AbstractEntity {
     @Column(name = "ParentUuid", length = 36)
     private String parentUuid;
 
+    @Column(name = "Type")
+    @Enumerated(value = EnumType.STRING)
+    private LedgerType ledgerType;
+
     @Column(name = "Description")
     private String description;
 
@@ -33,14 +35,6 @@ public abstract class AbstractLedger extends AbstractEntity {
 
     @Column(name = "ShowOnDashboard", nullable = false)
     private boolean showOnDashboard;
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
 
     public int getCode() {
         return code;
@@ -64,6 +58,14 @@ public abstract class AbstractLedger extends AbstractEntity {
 
     public void setParentUuid(String parentUuid) {
         this.parentUuid = parentUuid;
+    }
+
+    public LedgerType getLedgerType() {
+        return ledgerType;
+    }
+
+    public void setLedgerType(LedgerType ledgerType) {
+        this.ledgerType = ledgerType;
     }
 
     public String getDescription() {

@@ -3,7 +3,7 @@ package com.yaegar.yaegarbooksrestservice.service;
 import com.yaegar.yaegarbooksrestservice.model.ChartOfAccounts;
 import com.yaegar.yaegarbooksrestservice.model.User;
 import com.yaegar.yaegarbooksrestservice.repository.ChartOfAccountsRepository;
-import com.yaegar.yaegarbooksrestservice.util.ProfileClassification;
+import com.yaegar.yaegarbooksrestservice.model.enums.ProfileClassification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

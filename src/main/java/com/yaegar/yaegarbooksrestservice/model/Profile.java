@@ -1,7 +1,7 @@
 package com.yaegar.yaegarbooksrestservice.model;
 
 import com.yaegar.yaegarbooksrestservice.audit.entity.AbstractEntity;
-import com.yaegar.yaegarbooksrestservice.util.CompanyType;
+import com.yaegar.yaegarbooksrestservice.model.enums.CompanyType;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;

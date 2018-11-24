@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.yaegar.yaegarbooksrestservice.util.ProfileClassification.BUSINESS;
+import static com.yaegar.yaegarbooksrestservice.model.enums.ProfileClassification.BUSINESS;
 
 @RestController
 public class CompanyController {

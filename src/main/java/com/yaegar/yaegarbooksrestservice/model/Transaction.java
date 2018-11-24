@@ -1,8 +1,7 @@
 package com.yaegar.yaegarbooksrestservice.model;
 
 import com.yaegar.yaegarbooksrestservice.audit.entity.AbstractEntity;
-import com.yaegar.yaegarbooksrestservice.util.TransactionSide;
-import org.hibernate.validator.constraints.Length;
+import com.yaegar.yaegarbooksrestservice.model.enums.TransactionSide;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -19,11 +18,6 @@ public class Transaction extends AbstractEntity implements Serializable {
     @Column(name = "TransactionID")
     private Long transactionId;
 
-    @NotEmpty
-    @Length(min = 36, max = 36)
-    @Column(name = "Uuid", unique = true, nullable = false, length = 36)
-    private String uuid;
-
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "LedgerID", referencedColumnName = "LedgerID")
     private Ledger ledger;
@@ -32,7 +26,6 @@ public class Transaction extends AbstractEntity implements Serializable {
     @Column(name = "Description", nullable = false)
     private String description;
 
-    @NotEmpty
     @Column(name = "Amount", nullable = false)
     private BigDecimal amount;
 
@@ -44,20 +37,15 @@ public class Transaction extends AbstractEntity implements Serializable {
     @Enumerated(value = EnumType.STRING)
     private TransactionSide transactionSide;
 
+    @Transient
+    private String counterLedgerUuid;
+
     public Long getTransactionId() {
         return transactionId;
     }
 
     public void setTransactionId(Long transactionId) {
         this.transactionId = transactionId;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public Ledger getLedger() {
@@ -98,5 +86,13 @@ public class Transaction extends AbstractEntity implements Serializable {
 
     public void setTransactionSide(TransactionSide transactionSide) {
         this.transactionSide = transactionSide;
+    }
+
+    public String getCounterLedgerUuid() {
+        return counterLedgerUuid;
+    }
+
+    public void setCounterLedgerUuid(String counterLedgerUuid) {
+        this.counterLedgerUuid = counterLedgerUuid;
     }
 }

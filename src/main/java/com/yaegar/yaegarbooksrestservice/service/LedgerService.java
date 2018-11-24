@@ -1,9 +1,7 @@
 package com.yaegar.yaegarbooksrestservice.service;
 
-import com.yaegar.yaegarbooksrestservice.model.ChartOfAccounts;
-import com.yaegar.yaegarbooksrestservice.model.Ledger;
-import com.yaegar.yaegarbooksrestservice.model.LedgerTemplate;
-import com.yaegar.yaegarbooksrestservice.model.User;
+import com.yaegar.yaegarbooksrestservice.model.*;
+import com.yaegar.yaegarbooksrestservice.model.enums.LedgerType;
 import com.yaegar.yaegarbooksrestservice.repository.LedgerRepository;
 import com.yaegar.yaegarbooksrestservice.repository.LedgerTemplateRepository;
 import org.slf4j.Logger;
@@ -28,6 +26,10 @@ public class LedgerService {
     }
 
     public List<Ledger> addAllToCompany(ChartOfAccounts chartOfAccounts, User createdBy) {
+        final List<Ledger> existingLedgers = ledgerRepository.findByChartOfAccounts(chartOfAccounts);
+        if (!existingLedgers.isEmpty()) {
+            return existingLedgers;
+        }
         List<LedgerTemplate> ledgerTemplates = ledgerTemplateRepository
                 .findAll();
         final List<Ledger> ledgers = ledgerTemplates
@@ -39,6 +41,7 @@ public class LedgerService {
                     ledger.setDescription(ledgerTemplate.getDescription());
                     ledger.setChartOfAccounts(chartOfAccounts);
                     ledger.setCode(ledgerTemplate.getCode());
+                    ledger.setLedgerType(ledgerTemplate.getLedgerType());
                     ledger.setCreatedBy(createdBy);
                     ledger.setUpdatedBy(createdBy);
                     ledger.setReportSortOrder(ledgerTemplate.getReportSortOrder());
@@ -85,11 +88,43 @@ public class LedgerService {
         return ledgerRepository.findByParentUuid(parentUuid);
     }
 
+    public List<Ledger> findByParentUuidAndLedgerType(String parentUuid, LedgerType ledgerType) {
+        return ledgerRepository.findByParentUuidAndLedgerType(parentUuid, ledgerType);
+    }
+
     public List<Ledger> findByChartOfAccounts(ChartOfAccounts chartOfAccounts) {
         return ledgerRepository.findByChartOfAccounts(chartOfAccounts);
     }
 
-    public Ledger addLedger(Ledger ledger) {
-        return ledgerRepository.save(ledger);
+    public Ledger addLedger(Ledger ledger, User user) {
+        Ledger parentLedger = findByUuid(ledger.getParentUuid())
+                .orElseThrow(NullPointerException::new);
+        return saveLedger(ledger.getName(), ledger.getUuid(), parentLedger, ledger.getLedgerType(), user);
+    }
+
+    public Ledger addLedger(String ledgerName, Ledger parentLedger, LedgerType ledgerType, User user) {
+        return saveLedger(ledgerName, UUID.randomUUID().toString(), parentLedger, ledgerType, user);
+    }
+
+    private Ledger saveLedger(String ledgerName, String uuid, Ledger parentLedger, LedgerType ledgerType, User createdBy) {
+        Ledger ledger1 = new Ledger();
+        ledger1.setUuid(uuid);
+        ledger1.setParentUuid(parentLedger.getUuid());
+        ledger1.setName(ledgerName);
+        ledger1.setLedgerType(ledgerType);
+        ledger1.setDescription(ledgerName);
+        ledger1.setCreatedBy(createdBy);
+        ledger1.setUpdatedBy(createdBy);
+        ledger1.setChartOfAccounts(parentLedger.getChartOfAccounts());
+        ledger1.setReportSortOrder(parentLedger.getReportSortOrder());
+        ledger1.setShowOnDashboard(parentLedger.isShowOnDashboard());
+
+        final Integer maxCode = findByParentUuid(parentLedger.getUuid())
+                .stream()
+                .map(AbstractLedger::getCode)
+                .max(Integer::compareTo)
+                .orElse(parentLedger.getCode());
+        ledger1.setCode(maxCode + 1);
+        return ledgerRepository.save(ledger1);
     }
 }
