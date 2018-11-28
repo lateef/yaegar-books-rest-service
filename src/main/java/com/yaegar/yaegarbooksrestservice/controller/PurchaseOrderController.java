@@ -42,62 +42,7 @@ public class PurchaseOrderController {
                     .orElseThrow(NullPointerException::new);
             purchaseOrder.getLineItems().forEach(lineItem -> lineItem.setProduct(product));
             purchaseOrder1 = purchaseOrderService.addPurchaseOrder(purchaseOrder, user);
-//            Company suppliedToCompany = companyService.findByUuid(product.getSupplier().getSuppliedToCompany().getUuid())
-//                    .orElseThrow(NullPointerException::new);
-//
-//            Supplier supplier = product.getSupplier();
-//            if (Objects.nonNull(supplier)) {
-//                supplier = supplierService.findByUuid(supplier.getUuid())
-//                        .orElse(null);
-//            }
-//
-//            final List<Ledger> companyLedgers = ledgerService.findByChartOfAccounts(suppliedToCompany.getChartOfAccounts());
-//
-//            final Ledger salesIncome = companyLedgers
-//                    .stream()
-//                    .filter(ledger -> ledger.getName().equals("Sales Income"))
-//                    .findFirst()
-//                    .orElseThrow(NullPointerException::new);
-//
-//            final Ledger purchases = companyLedgers
-//                    .stream()
-//                    .filter(ledger -> ledger.getName().equals("Purchases"))
-//                    .findFirst()
-//                    .orElseThrow(NullPointerException::new);
-//
-//            final Ledger salesDiscount = companyLedgers
-//                    .stream()
-//                    .filter(ledger -> ledger.getName().equals("Sales Discount"))
-//                    .findFirst()
-//                    .orElseThrow(NullPointerException::new);
-//
-//            final Ledger purchasesDiscount = companyLedgers
-//                    .stream()
-//                    .filter(ledger -> ledger.getName().equals("Purchases Discount"))
-//                    .findFirst()
-//                    .orElseThrow(NullPointerException::new);
-//
-//            final Ledger incomeRevenueProductLedger = ledgerService.addLedger(product.getName(), salesIncome, PRODUCT, user);
-//            final Ledger costOfSalesGoodsProductLedger = ledgerService.addLedger(product.getName(), purchases, PRODUCT, user);
-//            final Ledger incomeRevenueProductDiscountLedger = ledgerService.addLedger(product.getName(), salesDiscount, DISCOUNT, user);
-//            final Ledger costOfSalesGoodsProductDiscountLedger = ledgerService.addLedger(product.getName(), purchasesDiscount, DISCOUNT, user);
-//
-//            final List<Ledger> productLedgers = Arrays.asList(incomeRevenueProductLedger, costOfSalesGoodsProductLedger, incomeRevenueProductDiscountLedger, costOfSalesGoodsProductDiscountLedger);
-//            product1 = productService.addProduct(product, supplier, productLedgers, user);
         }
         return ResponseEntity.ok().headers(headers).body(purchaseOrder1);
     }
-
-//    @RequestMapping(value = "/get-products/{parentUuid}", method = RequestMethod.GET)
-//    public ResponseEntity<List<Product>> getProducts(@PathVariable String parentUuid, ModelMap model, HttpServletRequest httpServletRequest) {
-//        final User user = (User) model.get("user");
-//        HttpHeaders headers = null;
-//        if (user != null) {
-//            headers = AuthenticationUtils.getAuthenticatedUser(user);
-//            List<Ledger> productLedgers = ledgerService.findByParentUuidAndLedgerType(parentUuid, PRODUCT);
-//            List<Product> products = productService.findByLedgersIn(productLedgers);
-//            return ResponseEntity.ok().headers(headers).body(products);
-//        }
-//        return ResponseEntity.ok().headers(headers).body(new ArrayList<>());
-//    }
 }

@@ -26,19 +26,19 @@ public class SupplierController {
     }
 
     @RequestMapping(value = "/add-supplier", method = RequestMethod.POST)
-    public ResponseEntity<Supplier> addLedger(@RequestBody final Supplier supplier, ModelMap model, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<Supplier> addSupplier(@RequestBody final Supplier supplier, ModelMap model, HttpServletRequest httpServletRequest) {
         final User user = (User) model.get("user");
         HttpHeaders headers = null;
         Supplier supplier1 = null;
         if (user != null) {
             headers = AuthenticationUtils.getAuthenticatedUser(user);
-            Company suppliedToCompany = companyService.findByUuid(supplier.getSuppliedToCompany().getUuid())
+            Company company = companyService.findByUuid(supplier.getCompany().getUuid())
                     .orElseThrow(NullPointerException::new);
-            supplier.setSuppliedToCompany(suppliedToCompany);
-            if (supplier.getSuppliedFromCompany() != null) {
-                Company suppliedFromCompany = companyService.findByUuid(supplier.getSuppliedFromCompany().getUuid())
+            supplier.setCompany(company);
+            if (supplier.getCompanySupplier() != null) {
+                Company suppliedFromCompany = companyService.findByUuid(supplier.getCompanySupplier().getUuid())
                         .orElse(null);
-                supplier.setSuppliedFromCompany(suppliedFromCompany);
+                supplier.setCompanySupplier(suppliedFromCompany);
             }
             supplier.setCreatedBy(user);
             supplier.setUpdatedBy(user);
@@ -53,7 +53,7 @@ public class SupplierController {
         HttpHeaders headers = null;
         if (user != null) {
             headers = AuthenticationUtils.getAuthenticatedUser(user);
-            List<Supplier> suppliers = supplierService.getSuppliersBySuppliedToCompanyCompanyUuid(companyUuid);
+            List<Supplier> suppliers = supplierService.getSuppliersByCompanyUuid(companyUuid);
             return ResponseEntity.ok().headers(headers).body(suppliers);
         }
         return ResponseEntity.ok().headers(headers).body(new ArrayList<>());
