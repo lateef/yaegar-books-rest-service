@@ -8,5 +8,6 @@ import java.util.Optional;
 
 public interface SupplierRepository  extends JpaRepository<Supplier, Long> {
     Optional<Supplier> findByUuid(String uuid);
-    List<Supplier> findBySuppliedToCompanyUuid(String companyUuid);
+
+    List<Supplier> findByCompanyUuid(String companyUuid);
 }

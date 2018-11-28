@@ -7,15 +7,15 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "Supplier",
+@Table(name = "Customer",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"Name", "CompanyID"})})
-public class Supplier  extends AbstractEntity implements Serializable {
-    private static final long serialVersionUID = 7891126089265140570L;
+public class Customer  extends AbstractEntity implements Serializable {
+    private static final long serialVersionUID = 9108589308270906156L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SupplierID")
-    private Long supplierId;
+    @Column(name = "CustomerID")
+    private Long customerId;
 
     @Length(max = 256)
     @Column(name = "Name", nullable = false, length = 256)
@@ -26,19 +26,19 @@ public class Supplier  extends AbstractEntity implements Serializable {
     private Company company;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "CompanySupplierID", referencedColumnName = "CompanyID")
-    private Company companySupplier;
+    @JoinColumn(name = "CompanyCustomerID", referencedColumnName = "CompanyID")
+    private Company companyCustomer;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "UserSupplierID", referencedColumnName = "CompanyID")
-    private Company userSupplier;
+    @JoinColumn(name = "UserCustomerID", referencedColumnName = "CompanyID")
+    private Company userCustomer;
 
-    public Long getSupplierId() {
-        return supplierId;
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public void setSupplierId(Long supplierId) {
-        this.supplierId = supplierId;
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public String getName() {
@@ -57,19 +57,19 @@ public class Supplier  extends AbstractEntity implements Serializable {
         this.company = company;
     }
 
-    public Company getCompanySupplier() {
-        return companySupplier;
+    public Company getCompanyCustomer() {
+        return companyCustomer;
     }
 
-    public void setCompanySupplier(Company companySupplier) {
-        this.companySupplier = companySupplier;
+    public void setCompanyCustomer(Company companyCustomer) {
+        this.companyCustomer = companyCustomer;
     }
 
-    public Company getUserSupplier() {
-        return userSupplier;
+    public Company getUserCustomer() {
+        return userCustomer;
     }
 
-    public void setUserSupplier(Company userSupplier) {
-        this.userSupplier = userSupplier;
+    public void setUserCustomer(Company userCustomer) {
+        this.userCustomer = userCustomer;
     }
 }

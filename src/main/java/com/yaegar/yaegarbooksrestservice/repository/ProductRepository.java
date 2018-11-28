@@ -8,11 +8,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductRepository  extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Product> findByUuid(String uuid);
 
-    Optional<Product> findByNameAndSupplierSuppliedToCompany(String name, Company suppliedToCompany);
+    Optional<Product> findByNameAndSupplierCompany(String name, Company company);
 
-        List<Product> findByLedgersIn(List<Ledger> ledgers);
-
+    List<Product> findByLedgersIn(List<Ledger> ledgers);
 }

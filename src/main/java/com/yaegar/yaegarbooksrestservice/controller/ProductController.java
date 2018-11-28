@@ -52,7 +52,7 @@ public class ProductController {
 
         if (user != null) {
             headers = AuthenticationUtils.getAuthenticatedUser(user);
-            Company suppliedToCompany = companyService.findByUuid(product.getSupplier().getSuppliedToCompany().getUuid())
+            Company company = companyService.findByUuid(product.getSupplier().getCompany().getUuid())
                     .orElseThrow(NullPointerException::new);
 
             Supplier supplier = product.getSupplier();
@@ -61,7 +61,7 @@ public class ProductController {
                         .orElse(null);
             }
 
-            final List<Ledger> companyLedgers = ledgerService.findByChartOfAccounts(suppliedToCompany.getChartOfAccounts());
+            final List<Ledger> companyLedgers = ledgerService.findByChartOfAccounts(company.getChartOfAccounts());
 
             final Ledger salesIncome = companyLedgers
                     .stream()

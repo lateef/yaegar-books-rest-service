@@ -29,7 +29,7 @@ public class ProductService {
                         throw new IllegalStateException("Exception:: Product already exists");
                     });
         } else {
-            findByNameAndSupplierSuppliedToCompany(product.getName(), supplier.getSuppliedToCompany())
+            findByNameAndSupplierSuppliedToCompany(product.getName(), supplier.getCompany())
                     .ifPresent(e -> {
                         throw new IllegalStateException("Exception:: Product already exists");
                     });
@@ -43,8 +43,8 @@ public class ProductService {
         return productRepository.findByUuid(uuid);
     }
 
-    public Optional<Product> findByNameAndSupplierSuppliedToCompany(String name, Company suppliedToCompany) {
-        return productRepository.findByNameAndSupplierSuppliedToCompany(name, suppliedToCompany);
+    public Optional<Product> findByNameAndSupplierSuppliedToCompany(String name, Company company) {
+        return productRepository.findByNameAndSupplierCompany(name, company);
     }
 
     public List<Product> findByLedgersIn(List<Ledger> ledgers) {

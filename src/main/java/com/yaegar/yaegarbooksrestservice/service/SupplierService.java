@@ -27,7 +27,7 @@ public class SupplierService {
         return supplierRepository.save(supplier);
     }
 
-    public List<Supplier> getSuppliersBySuppliedToCompanyCompanyUuid(String companyUuid) {
-        return supplierRepository.findBySuppliedToCompanyUuid(companyUuid);
+    public List<Supplier> getSuppliersByCompanyUuid(String companyUuid) {
+        return supplierRepository.findByCompanyUuid(companyUuid);
     }
 }
